@@ -1,16 +1,10 @@
-<%@ page contentType="text/html; UTF-8" pageEncoding="UTF-8" language="java" %>
-<%--
-<%@ page import="idusw.javaweb.openapia.model.*" %>
-<%@ page import="java.util.*" %>
---%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DCT | Simple Tables</title>
+  <title>AdminLTE 3 | Simple Tables</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -29,7 +23,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="./index3.jsp" class="nav-link">Home</a>
+        <a href="../../index3.html" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -70,7 +64,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="./dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <img src="../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
@@ -86,7 +80,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="./dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   John Pierce
@@ -102,7 +96,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="./dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Nora Silvester
@@ -158,10 +152,8 @@
     </ul>
   </nav>
   <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <%@ include file="../main/main-sidebar.jsp"%>
-
+  <!-- /.main-sidebar Container -->
+ <%@ include file="../main/main-sidebar.jsp"%>>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -184,69 +176,6 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Member List - Responsive Hover Table</h3>
-
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                  <thead>
-                  <tr>
-                    <th>Full Name</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <%-- Scriptlet으로 처리
-                  <%
-                    // requestScope 사용 못 함
-                    ArrayList<MemberDTO> memberList = (ArrayList<MemberDTO>) request.getAttribute("list");
-                    for(MemberDTO m : memberList) {
-                      out.println("<tr>");
-                      out.println("<td>" + m.getFullName()  + "</td>");
-                      out.println("<td><span class=\"tag tag-success\">" + m.getEmail()  + "</span></td>");
-                      out.println("<td>" + m.getPw()  + "</td>");
-                      out.println("</tr>");
-                    }
-                  %>
-                  --%>
-                  <!-- JSTL & EL 함께 사용, 속성으로 취급 -->
-                  <c:forEach items="${requestScope.dtoList}" var="dto" >
-                    <tr>
-                      <td>${dto["fullName"]}</td>
-                      <td><span class="tag tag-success">${dto.email}</span></td>
-                      <td>${requestScope.dto.pw}</td>
-                    </tr>
-                  </c:forEach>
-
-                  <!--
-
-                  -->
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-        </div>
-        <!-- /.row -->
         <div class="row">
           <div class="col-md-6">
             <div class="card">
@@ -523,6 +452,52 @@
             <!-- /.card -->
           </div>
           <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Responsive Hover Table</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>FullName</th>
+                      <th>Email</th>
+                      <th>PW</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+                  <c:forEach var="dto" items="${dtoList}">
+                    <tr>
+                      <td>${dto.fullname}</td>
+                      <td><span class="tag tag-success">${dto.email}</span></td>
+                      <td>${dto.pw}</td>
+                    </tr>
+                  </c:forEach>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
         </div>
         <!-- /.row -->
         <div class="row">
