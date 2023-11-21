@@ -106,7 +106,7 @@ public class MemberController extends HttpServlet {
                 while(rs.next()) {
                     MemberDTO m = new MemberDTO();
                     m.setMid(rs.getLong(1));
-                    m.setFullName(rs.getString("fullname"));
+                    m.setFullName(rs.getString("fullName"));
                     m.setEmail(rs.getString("email"));
                     m.setPw(rs.getString("pw"));
                     memberDTOList.add(m);
