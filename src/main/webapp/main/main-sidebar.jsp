@@ -73,6 +73,8 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
+            <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>>
+            <c:if test="${dto.email == null}">
             <li class="nav-item">
               <a href="../members/post-form" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
@@ -83,6 +85,13 @@
               <a href="../members/login.jsp" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Login</p>
+              </a>
+            </li>
+            </c:if>
+            <li class="nav-item">
+              <a href="../members/get-list" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Member managements</p>
               </a>
             </li>
           </ul>
@@ -295,9 +304,9 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="../pages/tables/simple.html" class="nav-link">
+              <a href="../members/get-list" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Simple Tables</p>
+                <p>Member managements</p>
               </a>
             </li>
             <li class="nav-item">
