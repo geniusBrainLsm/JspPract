@@ -74,7 +74,8 @@
           </a>
           <ul class="nav nav-treeview">
             <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>>
-            <c:if test="${dto.email == null}">
+            <c:choose>
+            <c:when test="${sessionScope.dto.email == null}">
             <li class="nav-item">
               <a href="../members/post-form" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
@@ -87,13 +88,29 @@
                 <p>Login</p>
               </a>
             </li>
-            </c:if>
+            </c:when>
+            <c:otherwise>
+
+            <li class="nav-item">
+              <a href="../members/get-one?mid=${sessionScope.dto.mid}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Detail</p>
+              </a>
+            </li>
             <li class="nav-item">
               <a href="../members/get-list" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Member managements</p>
+                <p>Member List</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="../members/logout" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Logout</p>
+              </a>
+            </li>
+            </c:otherwise>
+              </c:choose>
           </ul>
         </li>
         <li class="nav-item">

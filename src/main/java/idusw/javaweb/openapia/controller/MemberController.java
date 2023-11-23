@@ -6,8 +6,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.List;
 // HTTP Method (Rest API 관련이 높음) : post, get, (update, delete) - jsp에서는 지원에 문제가 있음
 @WebServlet(name="memberController", urlPatterns = {"/members/post", "/members/list", "/members/update",
         "/members/get", "/members/get-list" ,"/members/login-form",
-        "/members/login" ,"/members/delete", "/members/logout", "/members/post-form"})
+        "/members/login" ,"/members/delete", "/members/logout", "/members/post-form", "/members/get-one"})
 public class MemberController extends HttpServlet {
     List<MemberDTO> memberDTOList = new ArrayList<>(); // instance variable
 
@@ -25,6 +27,9 @@ public class MemberController extends HttpServlet {
         // http://localhost:8088/a202312345/members/post
         int index = request.getRequestURI().lastIndexOf("/"); // URI에서 마지막 / 위치의 인덱스 값을 반환
         String command = request.getRequestURI().substring(index + 1);
+        //session
+        HttpSession session = request.getSession();
+
         getConnection(); //getConnection() : 정의한 db연결 method
         if(command.equals("post")) { // == vs. equals()
             MemberDTO member = new MemberDTO();
@@ -47,10 +52,13 @@ public class MemberController extends HttpServlet {
                 // cnt 가 0이면 질의 실패
                 if(cnt != 0){ //성공
                     request.setAttribute("dto", member);
+                    //session.setAttribute("dto",member);
                     request.getRequestDispatcher("/members/success.jsp").forward(request,response);
                 }
                 else{
+
                     request.getRequestDispatcher("/errors/fail.jsp").forward(request,response);
+                    //forward는 request객체를 다음 request에도 유지한다는
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -93,7 +101,7 @@ public class MemberController extends HttpServlet {
         else if(command.equals("post-form")) {
             request.getRequestDispatcher("../members/register.jsp").forward(request, response);
         }
-        else if (command.equals("login")) {
+        else if (command.equals("login-form")) {
             MemberDTO m = null;
             try {
                 stmt = conn.createStatement(); //문장 객체 반환. (sql 질의 처리)
@@ -112,10 +120,12 @@ public class MemberController extends HttpServlet {
                     memberDTOList.add(m);
                 }
                 if(m != null){
-                    request.setAttribute("dto",m);
+                    session.setAttribute("dto",m); //scope는 PRSA(page request session application scope 순서)
+                    //request.setAttribute("dto",m);
                     request.getRequestDispatcher("../main/index.jsp").forward(request,response);
                 }
                 else{
+                    request.setAttribute("message", "이메일 혹은 비밀번호가 일치하지 않습니다.");
                     request.getRequestDispatcher("/errors/fail.jsp").forward(request, response);
                 }
             } catch (SQLException e) {
@@ -126,6 +136,81 @@ public class MemberController extends HttpServlet {
 //            request.setAttribute("dto", m);
 //            request.getRequestDispatcher("../main/index.jsp");
         }
+        else if (command.equals("get-one")) {
+            MemberDTO member = null;
+            try {
+                /* stmt = conn.createStatement(); //문장 객체 반환. (sql 질의 처리)
+                //select 구문의 경우 row 또는 rows를 반환 >>resultSet
+                String query = "select * from t_m202012015 " +
+                        "where mid =" + Long.valueOf(request.getParameter("mid"));
+
+                System.out.println(query);*/
+                pstmt = conn.prepareStatement("select * from t_m202012015 where mid = ?");
+                //여기 ? 는 placeholder임.
+                pstmt.setLong(1, Long.valueOf(request.getParameter("mid")));
+                rs = pstmt.executeQuery();
+                // cnt 가 0이면 질의 실패
+                if(rs.next()) {
+                    member = new MemberDTO();
+                    member.setMid(Long.valueOf(request.getParameter("mid")));
+                    member.setFullName(rs.getString("fullname"));
+                    member.setEmail(rs.getString("email"));
+                    member.setPw(rs.getString("pw"));
+                    member.setZipcode(rs.getString("zipcode"));
+
+                }
+                if(member != null){
+                    session.setAttribute("dto",member); //scope는 PRSA(page request session application scope 순서)
+                    //request.setAttribute("dto",m);
+                    request.getRequestDispatcher("../members/detail.jsp").forward(request,response);
+                }
+                else{
+                    //request.setAttribute("message", "이메일 혹은 비밀번호가 일치하지 않습니다.");
+                    request.getRequestDispatcher("/errors/fail.jsp").forward(request, response);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else if (command.equals("update")) {
+            MemberDTO member = new MemberDTO();
+            member.setMid(Long.valueOf(request.getParameter("mid")));
+            member.setFullName(request.getParameter("full-name"));
+            member.setEmail(request.getParameter("email"));
+            member.setPw(request.getParameter("pw"));
+            member.setZipcode(request.getParameter("zipcode"));
+            int cnt = 0;
+            try {
+                /* stmt = conn.createStatement(); //문장 객체 반환. (sql 질의 처리)
+                //select 구문의 경우 row 또는 rows를 반환 >>resultSet
+                String query = "select * from t_m202012015 " +
+                        "where mid =" + Long.valueOf(request.getParameter("mid"));
+
+                System.out.println(query);*/
+                pstmt = conn.prepareStatement("update t_m202012015 set t_m202012015 fullname = ?, pw = ?, zipcode = ?, where mid = ?");
+                //여기 ? 는 placeholder임.
+                pstmt.setString(1,member.getFullName());
+                pstmt.setString(2,member.getPw());
+                pstmt.setString(3,member.getEmail());
+                pstmt.setLong(4, member.getMid());
+                cnt = pstmt.executeUpdate();
+                // cnt 가 0이면 질의 실패
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if(cnt > 0){
+                    request.getRequestDispatcher("../members/get-one?mid=" + member.getMid()).forward(request, response);
+                } else{
+                    request.getRequestDispatcher("../errors.fail.jsp").forward(request, response);
+                }
+            }
+
+        }
+        else if (command.equals("logout")) {
+            session.invalidate();
+            response.sendRedirect("../main/index.jsp"); //request 객체 전달이 필요없는 경우(감사합니다.. 이런거 못띄운다)
+            //request.getRequestDispatcher("../main/index.jsp").forward(request, response);
+         }
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
