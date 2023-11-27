@@ -24,10 +24,44 @@
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Navbar Search -->
+    <%--      login register detail logout--%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <c:choose>
+      <c:when test="${sessionScope.dto.email == null}">
+        <a class="nav-link" href="../members/login.jsp" role="button">
+          <i class="fas fa-sign-in-alt"> sign in</i>
+        </a>
+        <a class="nav-link" href="../members/post-form" role="button">
+          <i class="fas fa-user-plus"> sign up</i>
+        </a>
+      </c:when>
+
+      <c:when test="${sessionScope.dto.fullName == 'admin'}">
+        <a class="nav-link" href="../members/logout" role="button">
+          <i class="fas fa-sign-out-alt"> sign out</i>
+        </a>
+        <a class="nav-link" href="../members/get-one?mid=${sessionScope.dto.mid}" role="button">
+          <i class="fas fa-user-tie"> mypage</i>
+        </a>
+        <a class="nav-link" href="../members/get-list" role="button">
+          <i class="fas fa-list"> list</i>
+        </a>
+      </c:when>
+      <c:otherwise>
+        <a class="nav-link" href="../members/logout" role="button">
+          <i class="fas fa-sign-out-alt"> sign out</i>
+        </a>
+        <a class="nav-link" href="../members/get-one?mid=${sessionScope.dto.mid}" role="button">
+          <i class="fas fa-user-tie"> mypage</i>
+        </a>
+      </c:otherwise>
+    </c:choose>
+    <%--  end   login register detail logout--%>
     <li class="nav-item">
       <a class="nav-link" data-widget="navbar-search" href="#" role="button">
         <i class="fas fa-search"></i>
       </a>
+
       <div class="navbar-search-block">
         <form class="form-inline">
           <div class="input-group input-group-sm">

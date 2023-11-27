@@ -26,12 +26,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Validation</h1>
+            <h1>My Page</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Validation</li>
+              <li class="breadcrumb-item active">My Page</li>
             </ol>
           </div>
         </div>
@@ -67,7 +67,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
-                    <input type="password" name="password" value="${dto.pw}" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <input type="password" name="pw" value="${dto.pw}" class="form-control" id="exampleInputPassword1" placeholder="Password">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputZipcode1">Zipcode</label>
@@ -81,10 +81,16 @@
                   </div>
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Update</button>
-                </div>
+                <div class="card-footer" style="display: flex;">
+                    <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Update</button>
               </form>
+                  <form action="../members/delete" method="post">
+                    <input type="hidden" name="mid" value="${dto.mid}">
+                    <button type="submit" class="btn btn-danger" style="padding-left: 10px;">Delete</button>
+                  </form>
+                </div>
+
+
             </div>
             <!-- /.card -->
             </div>

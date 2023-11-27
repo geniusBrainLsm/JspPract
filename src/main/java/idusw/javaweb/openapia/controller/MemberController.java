@@ -114,6 +114,7 @@ public class MemberController extends HttpServlet {
                 // cnt 가 0이면 질의 실패
                 if(rs.next()) {
                     m = new MemberDTO();
+                    m.setMid(rs.getLong("mid"));
                     m.setFullName(rs.getString("fullname"));
                     m.setEmail(rs.getString("email"));
                     m.setPw(rs.getString("pw"));
@@ -152,7 +153,7 @@ public class MemberController extends HttpServlet {
                 // cnt 가 0이면 질의 실패
                 if(rs.next()) {
                     member = new MemberDTO();
-                    member.setMid(Long.valueOf(request.getParameter("mid")));
+                    member.setMid(rs.getLong("mid"));
                     member.setFullName(rs.getString("fullname"));
                     member.setEmail(rs.getString("email"));
                     member.setPw(rs.getString("pw"));
@@ -187,11 +188,11 @@ public class MemberController extends HttpServlet {
                         "where mid =" + Long.valueOf(request.getParameter("mid"));
 
                 System.out.println(query);*/
-                pstmt = conn.prepareStatement("update t_m202012015 set t_m202012015 fullname = ?, pw = ?, zipcode = ?, where mid = ?");
+                pstmt = conn.prepareStatement("update t_m202012015 set fullname = ?, pw = ?, zipcode = ? where mid = ?");
                 //여기 ? 는 placeholder임.
                 pstmt.setString(1,member.getFullName());
                 pstmt.setString(2,member.getPw());
-                pstmt.setString(3,member.getEmail());
+                pstmt.setString(3,member.getZipcode());
                 pstmt.setLong(4, member.getMid());
                 cnt = pstmt.executeUpdate();
                 // cnt 가 0이면 질의 실패
@@ -201,10 +202,29 @@ public class MemberController extends HttpServlet {
                 if(cnt > 0){
                     request.getRequestDispatcher("../members/get-one?mid=" + member.getMid()).forward(request, response);
                 } else{
-                    request.getRequestDispatcher("../errors.fail.jsp").forward(request, response);
+                    request.getRequestDispatcher("../members/errors.fail.jsp").forward(request, response);
                 }
             }
 
+        }
+        else if (command.equals("delete")) {
+            MemberDTO member = new MemberDTO();
+            member.setMid(Long.valueOf(request.getParameter("mid")));
+            int cnt = 0;
+            try {
+                pstmt = conn.prepareStatement("delete from t_m202012015 where mid = ?");
+                pstmt.setLong(1, member.getMid());
+                cnt = pstmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if(cnt > 0){
+                    request.getRequestDispatcher("../members/deleted.jsp").forward(request, response);
+                    session.invalidate();
+                } else{
+                    request.getRequestDispatcher("../members/errors.fail.jsp").forward(request, response);
+                }
+            }
         }
         else if (command.equals("logout")) {
             session.invalidate();
@@ -225,8 +245,8 @@ public class MemberController extends HttpServlet {
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
     private void getConnection() {
-        String jdbcUrl = "jdbc:mysql://localhost:3306/db_a202012015?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
-        String dbUser = "u_a202012015";
+        String jdbcUrl = "jdbc:mysql://localhost:3306/db_202012015?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
+        String dbUser = "root";
         String dbPass = "1234";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // Driver를 메모리에 적재
