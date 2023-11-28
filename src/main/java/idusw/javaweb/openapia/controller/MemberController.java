@@ -17,9 +17,10 @@ import java.util.List;
 // Controller : 요청의 흐름을 제어하는 역할을 수행
 // 데이터 처리 기본 연산 : C.R.U.D (create, read, update, delete)
 // HTTP Method (Rest API 관련이 높음) : post, get, (update, delete) - jsp에서는 지원에 문제가 있음
-@WebServlet(name="memberController", urlPatterns = {"/members/post", "/members/list", "/members/update",
-        "/members/get", "/members/get-list" ,"/members/login-form",
-        "/members/login" ,"/members/delete", "/members/logout", "/members/post-form", "/members/get-one"})
+@WebServlet(name="memberController", urlPatterns = {"/members/post", "/members/update",
+        "/members/get", "/members/list" ,
+        "/members/login-form", "/members/login" ,"/members/delete", "/members/logout", "/members/post-form", "/members/detail", "/members/register-form"
+, "/members/register"})
 public class MemberController extends HttpServlet {
     List<MemberDTO> memberDTOList = new ArrayList<>(); // instance variable
 
@@ -31,7 +32,7 @@ public class MemberController extends HttpServlet {
         HttpSession session = request.getSession();
 
         getConnection(); //getConnection() : 정의한 db연결 method
-        if(command.equals("post")) { // == vs. equals()
+        if(command.equals("register-form")) { // == vs. equals()
             MemberDTO member = new MemberDTO();
             member.setFullName(request.getParameter("full-name"));
             member.setEmail(request.getParameter("email"));
@@ -70,9 +71,12 @@ public class MemberController extends HttpServlet {
 //            request.setAttribute("dtoList", memberDTOList);
 //
 //            request.getRequestDispatcher("../members/list.jsp").forward(request, response);
-            response.sendRedirect("/members/get-list"); //회원가입하면 get-list로 리다이렉트
+            response.sendRedirect("/members/list"); //회원가입하면 get-list로 리다이렉트
         }
-        else if(command.equals("get-list")) {
+        else if(command.equals("register")) {
+            request.getRequestDispatcher("../members/register.jsp").forward(request, response);
+        }
+        else if(command.equals("list")) {
             memberDTOList = new ArrayList<>(); //memberDTOㅣist 초기화
             try {
                 stmt = conn.createStatement(); //문장 객체 반환. (sql 질의 처리)
@@ -98,9 +102,7 @@ public class MemberController extends HttpServlet {
 
             request.getRequestDispatcher("../members/list.jsp").forward(request, response);
         }
-        else if(command.equals("post-form")) {
-            request.getRequestDispatcher("../members/register.jsp").forward(request, response);
-        }
+
         else if (command.equals("login-form")) {
             MemberDTO m = null;
             try {
@@ -137,7 +139,10 @@ public class MemberController extends HttpServlet {
 //            request.setAttribute("dto", m);
 //            request.getRequestDispatcher("../main/index.jsp");
         }
-        else if (command.equals("get-one")) {
+        else if (command.equals("login")) {
+            request.getRequestDispatcher("../members/login.jsp").forward(request, response);
+        }
+        else if (command.equals("detail")) {
             MemberDTO member = null;
             try {
                 /* stmt = conn.createStatement(); //문장 객체 반환. (sql 질의 처리)
@@ -245,8 +250,8 @@ public class MemberController extends HttpServlet {
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
     private void getConnection() {
-        String jdbcUrl = "jdbc:mysql://localhost:3306/db_202012015?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
-        String dbUser = "root";
+        String jdbcUrl = "jdbc:mysql://localhost:3306/db202012015?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
+        String dbUser = "u_a202012015";
         String dbPass = "1234";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // Driver를 메모리에 적재

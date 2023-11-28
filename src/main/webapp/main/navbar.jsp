@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: IN302
@@ -16,9 +17,9 @@
     <li class="nav-item d-none d-sm-inline-block">
       <a href="index3.html" class="nav-link">Home</a>
     </li>
-    <li class="nav-item d-none d-sm-inline-block">
-      <a href="#" class="nav-link">Contact</a>
-    </li>
+<%--    <li class="nav-item d-none d-sm-inline-block">--%>
+<%--      <a href="#" class="nav-link">Contact</a>--%>
+<%--    </li>--%>
   </ul>
 
   <!-- Right navbar links -->
@@ -28,22 +29,22 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <c:choose>
       <c:when test="${sessionScope.dto.email == null}">
-        <a class="nav-link" href="../members/login.jsp" role="button">
+        <a class="nav-link" href="../members/login-form" role="button">
           <i class="fas fa-sign-in-alt"> sign in</i>
         </a>
-        <a class="nav-link" href="../members/post-form" role="button">
+        <a class="nav-link" href="../members/register" role="button">
           <i class="fas fa-user-plus"> sign up</i>
         </a>
       </c:when>
 
-      <c:when test="${sessionScope.dto.fullName == 'admin'}">
+      <c:when test="${sessionScope.dto.email == 'admin@admin.admin'}">
         <a class="nav-link" href="../members/logout" role="button">
           <i class="fas fa-sign-out-alt"> sign out</i>
         </a>
-        <a class="nav-link" href="../members/get-one?mid=${sessionScope.dto.mid}" role="button">
+        <a class="nav-link" href="../members/detail?mid=${sessionScope.dto.mid}" role="button">
           <i class="fas fa-user-tie"> mypage</i>
         </a>
-        <a class="nav-link" href="../members/get-list" role="button">
+        <a class="nav-link" href="../members/list" role="button">
           <i class="fas fa-list"> list</i>
         </a>
       </c:when>

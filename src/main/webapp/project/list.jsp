@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Project Add</title>
+  <title>LSM | Projects</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -158,7 +158,7 @@
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">LSM</span>
     </a>
 
     <!-- Sidebar -->
@@ -529,16 +529,17 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="projects.html" class="nav-link">
+                <a href="../examples/projects.html" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Projects</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../examples/project-add.html" class="nav-link active">
+                <a href="../project/add.jsp" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Project Add</p>
                 </a>
+              </li>
               <li class="nav-item">
                 <a href="project-edit.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -834,12 +835,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Project Add</h1>
+            <h1>Projects</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Project Add</li>
+              <li class="breadcrumb-item active">Projects</li>
             </ol>
           </div>
         </div>
@@ -848,85 +849,562 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">General</h3>
 
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="form-group">
-                <label for="inputName">Project Name</label>
-                <input type="text" id="inputName" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputDescription">Project Description</label>
-                <textarea id="inputDescription" class="form-control" rows="4"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="inputStatus">Status</label>
-                <select id="inputStatus" class="form-control custom-select">
-                  <option selected disabled>Select one</option>
-                  <option>On Hold</option>
-                  <option>Canceled</option>
-                  <option>Success</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="inputClientCompany">Client Company</label>
-                <input type="text" id="inputClientCompany" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputProjectLeader">Project Leader</label>
-                <input type="text" id="inputProjectLeader" class="form-control">
-              </div>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-        <div class="col-md-6">
-          <div class="card card-secondary">
-            <div class="card-header">
-              <h3 class="card-title">Budget</h3>
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Projects</h3>
 
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="form-group">
-                <label for="inputEstimatedBudget">Estimated budget</label>
-                <input type="number" id="inputEstimatedBudget" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputSpentBudget">Total amount spent</label>
-                <input type="number" id="inputSpentBudget" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputEstimatedDuration">Estimated project duration</label>
-                <input type="number" id="inputEstimatedDuration" class="form-control">
-              </div>
-            </div>
-            <!-- /.card-body -->
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
           </div>
-          <!-- /.card -->
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <a href="#" class="btn btn-secondary">Cancel</a>
-          <input type="submit" value="Create new Project" class="btn btn-success float-right">
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+            <thead>
+            <tr>
+              <th style="width: 1%">
+                #
+              </th>
+              <th style="width: 20%">
+                Project Name
+              </th>
+              <th style="width: 30%">
+                Team Members
+              </th>
+              <th>
+                Project Progress
+              </th>
+              <th style="width: 8%" class="text-center">
+                Status
+              </th>
+              <th style="width: 20%">
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                #
+              </td>
+              <td>
+                <a>
+                  AdminLTE v3
+                </a>
+                <br/>
+                <small>
+                  Created 01.01.2019
+                </small>
+              </td>
+              <td>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar2.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar3.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar4.png">
+                  </li>
+                </ul>
+              </td>
+              <td class="project_progress">
+                <div class="progress progress-sm">
+                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                  </div>
+                </div>
+                <small>
+                  57% Complete
+                </small>
+              </td>
+              <td class="project-state">
+                <span class="badge badge-success">Success</span>
+              </td>
+              <td class="project-actions text-right">
+                <a class="btn btn-primary btn-sm" href="#">
+                  <i class="fas fa-folder">
+                  </i>
+                  View
+                </a>
+                <a class="btn btn-info btn-sm" href="#">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Edit
+                </a>
+                <a class="btn btn-danger btn-sm" href="#">
+                  <i class="fas fa-trash">
+                  </i>
+                  Delete
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                #
+              </td>
+              <td>
+                <a>
+                  AdminLTE v3
+                </a>
+                <br/>
+                <small>
+                  Created 01.01.2019
+                </small>
+              </td>
+              <td>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar2.png">
+                  </li>
+                </ul>
+              </td>
+              <td class="project_progress">
+                <div class="progress progress-sm">
+                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100" style="width: 47%">
+                  </div>
+                </div>
+                <small>
+                  47% Complete
+                </small>
+              </td>
+              <td class="project-state">
+                <span class="badge badge-success">Success</span>
+              </td>
+              <td class="project-actions text-right">
+                <a class="btn btn-primary btn-sm" href="#">
+                  <i class="fas fa-folder">
+                  </i>
+                  View
+                </a>
+                <a class="btn btn-info btn-sm" href="#">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Edit
+                </a>
+                <a class="btn btn-danger btn-sm" href="#">
+                  <i class="fas fa-trash">
+                  </i>
+                  Delete
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                #
+              </td>
+              <td>
+                <a>
+                  AdminLTE v3
+                </a>
+                <br/>
+                <small>
+                  Created 01.01.2019
+                </small>
+              </td>
+              <td>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar2.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar3.png">
+                  </li>
+                </ul>
+              </td>
+              <td class="project_progress">
+                <div class="progress progress-sm">
+                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="77" aria-valuemin="0" aria-valuemax="100" style="width: 77%">
+                  </div>
+                </div>
+                <small>
+                  77% Complete
+                </small>
+              </td>
+              <td class="project-state">
+                <span class="badge badge-success">Success</span>
+              </td>
+              <td class="project-actions text-right">
+                <a class="btn btn-primary btn-sm" href="#">
+                  <i class="fas fa-folder">
+                  </i>
+                  View
+                </a>
+                <a class="btn btn-info btn-sm" href="#">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Edit
+                </a>
+                <a class="btn btn-danger btn-sm" href="#">
+                  <i class="fas fa-trash">
+                  </i>
+                  Delete
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                #
+              </td>
+              <td>
+                <a>
+                  AdminLTE v3
+                </a>
+                <br/>
+                <small>
+                  Created 01.01.2019
+                </small>
+              </td>
+              <td>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar2.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar3.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar4.png">
+                  </li>
+                </ul>
+              </td>
+              <td class="project_progress">
+                <div class="progress progress-sm">
+                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                  </div>
+                </div>
+                <small>
+                  60% Complete
+                </small>
+              </td>
+              <td class="project-state">
+                <span class="badge badge-success">Success</span>
+              </td>
+              <td class="project-actions text-right">
+                <a class="btn btn-primary btn-sm" href="#">
+                  <i class="fas fa-folder">
+                  </i>
+                  View
+                </a>
+                <a class="btn btn-info btn-sm" href="#">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Edit
+                </a>
+                <a class="btn btn-danger btn-sm" href="#">
+                  <i class="fas fa-trash">
+                  </i>
+                  Delete
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                #
+              </td>
+              <td>
+                <a>
+                  AdminLTE v3
+                </a>
+                <br/>
+                <small>
+                  Created 01.01.2019
+                </small>
+              </td>
+              <td>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar4.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar5.png">
+                  </li>
+                </ul>
+              </td>
+              <td class="project_progress">
+                <div class="progress progress-sm">
+                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100" style="width: 12%">
+                  </div>
+                </div>
+                <small>
+                  12% Complete
+                </small>
+              </td>
+              <td class="project-state">
+                <span class="badge badge-success">Success</span>
+              </td>
+              <td class="project-actions text-right">
+                <a class="btn btn-primary btn-sm" href="#">
+                  <i class="fas fa-folder">
+                  </i>
+                  View
+                </a>
+                <a class="btn btn-info btn-sm" href="#">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Edit
+                </a>
+                <a class="btn btn-danger btn-sm" href="#">
+                  <i class="fas fa-trash">
+                  </i>
+                  Delete
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                #
+              </td>
+              <td>
+                <a>
+                  AdminLTE v3
+                </a>
+                <br/>
+                <small>
+                  Created 01.01.2019
+                </small>
+              </td>
+              <td>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar2.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar3.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar4.png">
+                  </li>
+                </ul>
+              </td>
+              <td class="project_progress">
+                <div class="progress progress-sm">
+                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" style="width: 35%">
+                  </div>
+                </div>
+                <small>
+                  35% Complete
+                </small>
+              </td>
+              <td class="project-state">
+                <span class="badge badge-success">Success</span>
+              </td>
+              <td class="project-actions text-right">
+                <a class="btn btn-primary btn-sm" href="#">
+                  <i class="fas fa-folder">
+                  </i>
+                  View
+                </a>
+                <a class="btn btn-info btn-sm" href="#">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Edit
+                </a>
+                <a class="btn btn-danger btn-sm" href="#">
+                  <i class="fas fa-trash">
+                  </i>
+                  Delete
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                #
+              </td>
+              <td>
+                <a>
+                  AdminLTE v3
+                </a>
+                <br/>
+                <small>
+                  Created 01.01.2019
+                </small>
+              </td>
+              <td>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar4.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar5.png">
+                  </li>
+                </ul>
+              </td>
+              <td class="project_progress">
+                <div class="progress progress-sm">
+                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100" style="width: 87%">
+                  </div>
+                </div>
+                <small>
+                  87% Complete
+                </small>
+              </td>
+              <td class="project-state">
+                <span class="badge badge-success">Success</span>
+              </td>
+              <td class="project-actions text-right">
+                <a class="btn btn-primary btn-sm" href="#">
+                  <i class="fas fa-folder">
+                  </i>
+                  View
+                </a>
+                <a class="btn btn-info btn-sm" href="#">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Edit
+                </a>
+                <a class="btn btn-danger btn-sm" href="#">
+                  <i class="fas fa-trash">
+                  </i>
+                  Delete
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                #
+              </td>
+              <td>
+                <a>
+                  AdminLTE v3
+                </a>
+                <br/>
+                <small>
+                  Created 01.01.2019
+                </small>
+              </td>
+              <td>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar3.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar4.png">
+                  </li>
+                </ul>
+              </td>
+              <td class="project_progress">
+                <div class="progress progress-sm">
+                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="77" aria-valuemin="0" aria-valuemax="100" style="width: 77%">
+                  </div>
+                </div>
+                <small>
+                  77% Complete
+                </small>
+              </td>
+              <td class="project-state">
+                <span class="badge badge-success">Success</span>
+              </td>
+              <td class="project-actions text-right">
+                <a class="btn btn-primary btn-sm" href="#">
+                  <i class="fas fa-folder">
+                  </i>
+                  View
+                </a>
+                <a class="btn btn-info btn-sm" href="#">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Edit
+                </a>
+                <a class="btn btn-danger btn-sm" href="#">
+                  <i class="fas fa-trash">
+                  </i>
+                  Delete
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                #
+              </td>
+              <td>
+                <a>
+                  AdminLTE v3
+                </a>
+                <br/>
+                <small>
+                  Created 01.01.2019
+                </small>
+              </td>
+              <td>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar3.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar4.png">
+                  </li>
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" src="../dist/img/avatar5.png">
+                  </li>
+                </ul>
+              </td>
+              <td class="project_progress">
+                <div class="progress progress-sm">
+                  <div class="progress-bar bg-green" role="progressbar" aria-valuenow="77" aria-valuemin="0" aria-valuemax="100" style="width: 77%">
+                  </div>
+                </div>
+                <small>
+                  77% Complete
+                </small>
+              </td>
+              <td class="project-state">
+                <span class="badge badge-success">Success</span>
+              </td>
+              <td class="project-actions text-right">
+                <a class="btn btn-primary btn-sm" href="#">
+                  <i class="fas fa-folder">
+                  </i>
+                  View
+                </a>
+                <a class="btn btn-info btn-sm" href="#">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Edit
+                </a>
+                <a class="btn btn-danger btn-sm" href="#">
+                  <i class="fas fa-trash">
+                  </i>
+                  Delete
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
+        <!-- /.card-body -->
       </div>
+      <!-- /.card -->
+
     </section>
     <!-- /.content -->
   </div>
