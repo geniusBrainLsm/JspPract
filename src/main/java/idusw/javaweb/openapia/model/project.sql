@@ -1,3 +1,10 @@
+CREATE DATABASE db202012015;
+CREATE USER 'u_a202012015'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON db202012015.* TO 'u_a202012015'@'%';
+FLUSH PRIVILEGES;
+
+
+
 create table t_prja202012015 (
     pid bigint auto_increment primary key,
     project_name varchar(30) not null,

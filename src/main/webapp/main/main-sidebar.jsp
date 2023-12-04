@@ -78,13 +78,13 @@
             <c:choose>
             <c:when test="${sessionScope.dto.email == null}">
             <li class="nav-item">
-              <a href="../members/post-form" class="nav-link">
+              <a href="../members/register-from" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Register</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="../members/login.jsp" class="nav-link">
+              <a href="../members/login-form" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Login</p>
               </a>
@@ -93,7 +93,7 @@
             <c:otherwise>
 
             <li class="nav-item">
-              <a href="../members/get-one?mid=${sessionScope.dto.mid}" class="nav-link">
+              <a href="../members/list?mid=${sessionScope.dto.mid}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Detail</p>
               </a>

@@ -32,7 +32,7 @@ public class MemberController extends HttpServlet {
         HttpSession session = request.getSession();
 
         getConnection(); //getConnection() : 정의한 db연결 method
-        if(command.equals("register-form")) { // == vs. equals()
+        if(command.equals("register")) { // == vs. equals()
             MemberDTO member = new MemberDTO();
             member.setFullName(request.getParameter("full-name"));
             member.setEmail(request.getParameter("email"));
@@ -73,7 +73,7 @@ public class MemberController extends HttpServlet {
 //            request.getRequestDispatcher("../members/list.jsp").forward(request, response);
             response.sendRedirect("/members/list"); //회원가입하면 get-list로 리다이렉트
         }
-        else if(command.equals("register")) {
+        else if(command.equals("register-form")) {
             request.getRequestDispatcher("../members/register.jsp").forward(request, response);
         }
         else if(command.equals("list")) {
@@ -103,7 +103,7 @@ public class MemberController extends HttpServlet {
             request.getRequestDispatcher("../members/list.jsp").forward(request, response);
         }
 
-        else if (command.equals("login-form")) {
+        else if (command.equals("login")) {
             MemberDTO m = null;
             try {
                 stmt = conn.createStatement(); //문장 객체 반환. (sql 질의 처리)
@@ -139,7 +139,7 @@ public class MemberController extends HttpServlet {
 //            request.setAttribute("dto", m);
 //            request.getRequestDispatcher("../main/index.jsp");
         }
-        else if (command.equals("login")) {
+        else if (command.equals("login-form")) {
             request.getRequestDispatcher("../members/login.jsp").forward(request, response);
         }
         else if (command.equals("detail")) {
@@ -205,7 +205,7 @@ public class MemberController extends HttpServlet {
                 throw new RuntimeException(e);
             } finally {
                 if(cnt > 0){
-                    request.getRequestDispatcher("../members/get-one?mid=" + member.getMid()).forward(request, response);
+                    request.getRequestDispatcher("../members/detail?mid=" + member.getMid()).forward(request, response);
                 } else{
                     request.getRequestDispatcher("../members/errors.fail.jsp").forward(request, response);
                 }
@@ -251,7 +251,7 @@ public class MemberController extends HttpServlet {
     private ResultSet rs = null;
     private void getConnection() {
         String jdbcUrl = "jdbc:mysql://localhost:3306/db202012015?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
-        String dbUser = "u_a202012015";
+        String dbUser = "lsm";
         String dbPass = "1234";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // Driver를 메모리에 적재

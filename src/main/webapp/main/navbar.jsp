@@ -32,7 +32,7 @@
         <a class="nav-link" href="../members/login-form" role="button">
           <i class="fas fa-sign-in-alt"> sign in</i>
         </a>
-        <a class="nav-link" href="../members/register" role="button">
+        <a class="nav-link" href="../members/register-form" role="button">
           <i class="fas fa-user-plus"> sign up</i>
         </a>
       </c:when>
@@ -52,7 +52,7 @@
         <a class="nav-link" href="../members/logout" role="button">
           <i class="fas fa-sign-out-alt"> sign out</i>
         </a>
-        <a class="nav-link" href="../members/get-one?mid=${sessionScope.dto.mid}" role="button">
+        <a class="nav-link" href="../members/detail?mid=${sessionScope.dto.mid}" role="button">
           <i class="fas fa-user-tie"> mypage</i>
         </a>
       </c:otherwise>

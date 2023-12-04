@@ -24,7 +24,7 @@
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
 
-      <form action="../members/register-form" method="post">
+      <form action="../members/register" method="post">
         <div class="input-group mb-3">
           <input name ="full-name" type="text" class="form-control" placeholder="Full name">
           <div class="input-group-append">
