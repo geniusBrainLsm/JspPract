@@ -76,11 +76,11 @@
               </div>
               <div class="form-group">
                 <label for="inputClientCompany">Client Company</label>
-                <input type="text" id="inputClientCompany" class="form-control">
+                <input type="text" name="client-company" id="inputClientCompany" class="form-control">
               </div>
               <div class="form-group">
                 <label for="inputProjectLeader">Project Leader</label>
-                <input type="text" id="inputProjectLeader" class="form-control">
+                <input type="text" name="project-leader" id="inputProjectLeader" class="form-control">
               </div>
             </div>
             <!-- /.card-body -->
@@ -101,15 +101,15 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="inputEstimatedBudget">Estimated budget</label>
-                <input type="number" id="inputEstimatedBudget" class="form-control">
+                <input type="number" name="estimated-budget" id="inputEstimatedBudget" class="form-control">
               </div>
               <div class="form-group">
                 <label for="inputSpentBudget">Total amount spent</label>
-                <input type="number" id="inputSpentBudget" class="form-control">
+                <input type="number" name="total-amount-spent" id="inputSpentBudget" class="form-control">
               </div>
               <div class="form-group">
                 <label for="inputEstimatedDuration">Estimated project duration</label>
-                <input type="number" id="inputEstimatedDuration" class="form-control">
+                <input type="number" name="estimated-project-duration" id="inputEstimatedDuration" class="form-control">
               </div>
             </div>
             <!-- /.card-body -->

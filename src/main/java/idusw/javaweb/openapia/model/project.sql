@@ -4,11 +4,11 @@ GRANT ALL PRIVILEGES ON db202012015.* TO 'u_a202012015'@'%';
 FLUSH PRIVILEGES;
 
 
-
+DROP TABLE t_prja202012015;
 create table t_prja202012015 (
     pid bigint auto_increment primary key,
     project_name varchar(30) not null,
-    project_descriptions varchar(30) ,
+    project_description varchar(30) ,
     status varchar(15) not null ,
     client_company varchar(5),
     project_leader varchar(30),

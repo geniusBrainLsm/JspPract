@@ -45,7 +45,7 @@ public class MemberController extends HttpServlet {
                 System.out.println("암호 불일치로 작업 중단");
             try {
                 stmt = conn.createStatement(); //문장 객체 반환. (sql 질의 처리)
-                int cnt = stmt.executeUpdate("insert into t_m202012015(fullname, email, zipcode, pw)  values ('" +
+                int cnt = stmt.executeUpdate("insert into t_prja202012015(fullname, email, zipcode, pw)  values ('" +
                         member.getFullName() + "', '" +
                         member.getEmail() + "', '" +
                         member.getZipcode() + "', '" +
