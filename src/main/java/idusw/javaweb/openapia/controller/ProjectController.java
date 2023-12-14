@@ -241,4 +241,9 @@ public class ProjectController extends HttpServlet {
 
         }
     }
+    private ProjectDTO setRsToDTO(ResultSet rs) throws SQLException{
+        projectDTO = new ProjectDTO();
+        projectDTO = setPid(rs.getLong("pid"));
+        pr
+    }
 }
