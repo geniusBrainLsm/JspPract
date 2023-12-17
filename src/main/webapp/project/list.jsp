@@ -51,12 +51,30 @@
           <h3 class="card-title">Projects</h3>
 
           <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-              <i class="fas fa-times"></i>
-            </button>
+            <div class = "input-group input-group-sm">
+              <form action="../project/search" method="get">
+                <div class="input-group-append">
+                  <select name="by" id ="inputStatus" class="form-control custom-select">
+                    <c:choose>
+                      <c:when test="${by == 'leader'}">
+                        <option>name</option>
+                        <option selected>leader</option>
+                      </c:when>
+                      <c:otherwise>
+                        <option selected>name</option>
+                        <option>leader</option>
+                      </c:otherwise>
+                    </c:choose>
+
+                  </select>
+                  <input type="text" name="keyword" value="${keyword}" class="form-control float-right" placeholder="Project Name">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+
+              </form>
+            </div>
           </div>
         </div>
         <div class="card-body p-0">
@@ -68,6 +86,8 @@
               </th>
               <th style="width: 20%">
                 Project Name
+                <a href="../project/list?orderby=project_name&direction=asc"><i class="fas fa-arrow-up"></i></a>
+                <a href="../project/list?orderby=project_name&direction=desc"><i class="fas fa-arrow-down"></i></a>
               </th>
               <th style="width: 30%">
                 Team Leader
@@ -95,7 +115,7 @@
                 </a>
                 <br/>
                 <small>
-                  Created 01.01.2019
+                  Created ${dto.regTimestamp}
                 </small>
               </td>
               <td>
@@ -112,7 +132,7 @@
                   </div>
                 </div>
                 <small>
-                  57% Complete
+                    ${dto.revTimestamp}
                 </small>
               </td>
               <td class="project-state">
@@ -124,12 +144,12 @@
                   </i>
                   Detail
                 </a>
-                <a class="btn btn-info btn-sm" href="../project/update-form">
+                <a class="btn btn-info btn-sm" href="../project/update-form?pid=${dto.pid}">
                   <i class="fas fa-pencil-alt">
                   </i>
                   Edit
                 </a>
-                <a class="btn btn-danger btn-sm" href="../project/delete">
+                <a class="btn btn-danger btn-sm" href="../project/delete?pid=${dto.pid}">
                   <i class="fas fa-trash">
                   </i>
                   Delete

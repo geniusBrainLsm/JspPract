@@ -8,6 +8,7 @@ public class MemberDTO {
     private String email;
     private String pw;
     private String zipcode;
+
     // getter / setter method
 
     public Long getMid() {

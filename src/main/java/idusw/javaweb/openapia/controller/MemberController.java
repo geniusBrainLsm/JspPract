@@ -53,7 +53,7 @@ public class MemberController extends HttpServlet {
             else
                 System.out.println("암호 불일치로 작업 중단");
 
-            String sql = "insert into t_prja202012015(fullname, email, zipcode, pw) values (?, ?, ?, ?)";
+            String sql = "insert into "+tableName+"(full_name, email, zipcode, pw) values (?, ?, ?, ?)";
             try(Connection conn = connectionManager.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, member.getFullName());
@@ -78,107 +78,80 @@ public class MemberController extends HttpServlet {
             request.getRequestDispatcher("../members/register.jsp").forward(request, response);
         }
         else if(command.equals("list")) {
-            memberDTOList = new ArrayList<>(); //memberDTOㅣist 초기화
-            try {
-                stmt = conn.createStatement(); //문장 객체 반환. (sql 질의 처리)
-                //select 구문의 경우 row 또는 rows를 반환 >>resultSet
-                rs = stmt.executeQuery("select * from t_m202012015");
-                // cnt 가 0이면 질의 실패
+            memberDTOList = new ArrayList<>(); //memberDTOList 초기화
+            String sql = "select * from " + tableName;
+            try(Connection conn = connectionManager.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                rs = pstmt.executeQuery();
                 while(rs.next()) {
-                    MemberDTO m = new MemberDTO();
-                    m.setMid(rs.getLong(1));
-                    m.setFullName(rs.getString("fullName"));
-                    m.setEmail(rs.getString("email"));
-                    m.setPw(rs.getString("pw"));
+                    MemberDTO m = setRsToDTO(rs);
                     memberDTOList.add(m);
                 }
-
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-
-            // Database로 부터 정보를 가져와서 속성으로 저장 후 전달
-
-            request.setAttribute("dtoList", memberDTOList);
-
-            request.getRequestDispatcher("../members/list.jsp").forward(request, response);
+            finally{
+                if(memberDTOList != null){ //회원 목록이 있을 경우
+                    request.setAttribute("dtoList", memberDTOList);
+                    request.getRequestDispatcher("../members/list.jsp").forward(request,response);
+                } else{
+                    request.setAttribute("message", "회원 목록이 없습니다.");
+                    request.getRequestDispatcher("../errors/fail.jsp").forward(request,response);
+                }
+            }
         }
 
         else if (command.equals("login")) {
             MemberDTO m = null;
-            try {
-                stmt = conn.createStatement(); //문장 객체 반환. (sql 질의 처리)
-                //select 구문의 경우 row 또는 rows를 반환 >>resultSet
-                String query = "select * from t_m202012015 " +
-                        "where email ='" + request.getParameter("email")+
-                        "' and pw = '" + request.getParameter("pw1")+"'";
-                System.out.println(query);
-                rs = stmt.executeQuery(query);
-                // cnt 가 0이면 질의 실패
+            String sql = "select * from "+tableName+" where email = ? and pw = ?";
+            try (Connection conn = connectionManager.getConnection();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, request.getParameter("email"));
+                pstmt.setString(2, request.getParameter("pw1"));
+                rs = pstmt.executeQuery();
                 if(rs.next()) {
-                    m = new MemberDTO();
-                    m.setMid(rs.getLong("mid"));
-                    m.setFullName(rs.getString("fullname"));
-                    m.setEmail(rs.getString("email"));
-                    m.setPw(rs.getString("pw"));
-                    memberDTOList.add(m);
-                }
-                if(m != null){
-                    session.setAttribute("dto",m); //scope는 PRSA(page request session application scope 순서)
-                    //request.setAttribute("dto",m);
-                    request.getRequestDispatcher("../main/index.jsp").forward(request,response);
-                }
-                else{
-                    request.setAttribute("message", "이메일 혹은 비밀번호가 일치하지 않습니다.");
-                    request.getRequestDispatcher("/errors/fail.jsp").forward(request, response);
+                    m = setRsToDTO(rs);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
 
-
-//            request.setAttribute("dto", m);
-//            request.getRequestDispatcher("../main/index.jsp");
+            if(m != null){
+                session.setAttribute("dto",m); //scope는 PRSA(page request session application scope 순서)
+                request.getRequestDispatcher("../main/index.jsp").forward(request,response);
+            }
+            else{
+                request.setAttribute("message", "이메일 혹은 비밀번호가 일치하지 않습니다.");
+                request.getRequestDispatcher("/errors/fail.jsp").forward(request, response);
+            }
         }
+
         else if (command.equals("login-form")) {
             request.getRequestDispatcher("../members/login.jsp").forward(request, response);
         }
         else if (command.equals("detail")) {
             MemberDTO member = null;
-            try {
-                /* stmt = conn.createStatement(); //문장 객체 반환. (sql 질의 처리)
-                //select 구문의 경우 row 또는 rows를 반환 >>resultSet
-                String query = "select * from t_m202012015 " +
-                        "where mid =" + Long.valueOf(request.getParameter("mid"));
-
-                System.out.println(query);*/
-                pstmt = conn.prepareStatement("select * from t_m202012015 where mid = ?");
-                //여기 ? 는 placeholder임.
+            String sql = "select * from "+tableName+" where mid = ?";
+            try (Connection conn = connectionManager.getConnection();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setLong(1, Long.valueOf(request.getParameter("mid")));
                 rs = pstmt.executeQuery();
-                // cnt 가 0이면 질의 실패
                 if(rs.next()) {
-                    member = new MemberDTO();
-                    member.setMid(rs.getLong("mid"));
-                    member.setFullName(rs.getString("fullname"));
-                    member.setEmail(rs.getString("email"));
-                    member.setPw(rs.getString("pw"));
-                    member.setZipcode(rs.getString("zipcode"));
-
-                }
-                if(member != null){
-                    session.setAttribute("dto",member); //scope는 PRSA(page request session application scope 순서)
-                    //request.setAttribute("dto",m);
-                    request.getRequestDispatcher("../members/detail.jsp").forward(request,response);
-                }
-                else{
-                    //request.setAttribute("message", "이메일 혹은 비밀번호가 일치하지 않습니다.");
-                    request.getRequestDispatcher("/errors/fail.jsp").forward(request, response);
+                    member = setRsToDTO(rs);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+
+            if(member != null){
+                session.setAttribute("dto",member); //scope는 PRSA(page request session application scope 순서)
+                request.getRequestDispatcher("../members/detail.jsp").forward(request,response);
+            }
+            else{
+                request.getRequestDispatcher("/errors/fail.jsp").forward(request, response);
+            }
         }
+
         else if (command.equals("update")) {
             MemberDTO member = new MemberDTO();
             member.setMid(Long.valueOf(request.getParameter("mid")));
@@ -187,38 +160,31 @@ public class MemberController extends HttpServlet {
             member.setPw(request.getParameter("pw"));
             member.setZipcode(request.getParameter("zipcode"));
             int cnt = 0;
-            try {
-                /* stmt = conn.createStatement(); //문장 객체 반환. (sql 질의 처리)
-                //select 구문의 경우 row 또는 rows를 반환 >>resultSet
-                String query = "select * from t_m202012015 " +
-                        "where mid =" + Long.valueOf(request.getParameter("mid"));
-
-                System.out.println(query);*/
-                pstmt = conn.prepareStatement("update t_m202012015 set fullname = ?, pw = ?, zipcode = ? where mid = ?");
-                //여기 ? 는 placeholder임.
-                pstmt.setString(1,member.getFullName());
-                pstmt.setString(2,member.getPw());
-                pstmt.setString(3,member.getZipcode());
+            String sql = "update "+tableName+" set full_name = ?, pw = ?, zipcode = ? where mid = ?";
+            try (Connection conn = connectionManager.getConnection();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, member.getFullName());
+                pstmt.setString(2, member.getPw());
+                pstmt.setString(3, member.getZipcode());
                 pstmt.setLong(4, member.getMid());
                 cnt = pstmt.executeUpdate();
-                // cnt 가 0이면 질의 실패
             } catch (SQLException e) {
                 throw new RuntimeException(e);
-            } finally {
-                if(cnt > 0){
-                    request.getRequestDispatcher("../members/detail?mid=" + member.getMid()).forward(request, response);
-                } else{
-                    request.getRequestDispatcher("../members/errors.fail.jsp").forward(request, response);
-                }
             }
-
+            if(cnt > 0){
+                request.getRequestDispatcher("../members/detail?mid=" + member.getMid()).forward(request, response);
+            } else{
+                request.getRequestDispatcher("../members/fail.jsp").forward(request, response);
+            }
         }
+
         else if (command.equals("delete")) {
             MemberDTO member = new MemberDTO();
             member.setMid(Long.valueOf(request.getParameter("mid")));
             int cnt = 0;
-            try {
-                pstmt = conn.prepareStatement("delete from t_m202012015 where mid = ?");
+            String sql = "delete from "+tableName+" where mid = ?";
+            try (Connection conn = connectionManager.getConnection();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setLong(1, member.getMid());
                 cnt = pstmt.executeUpdate();
             } catch (SQLException e) {

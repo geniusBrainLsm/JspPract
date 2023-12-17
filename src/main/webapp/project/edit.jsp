@@ -51,7 +51,7 @@
 
         <!-- Main content -->
         <section class="content">
-            <form action="../project/update" method="post">
+            <form action="../project/add" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="pid" value="${pDto.pid}">
             <div class="row">
                 <div class="col-md-6">
@@ -104,7 +104,16 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputProjectLeader">Project Leader</label>
-                                <input type="text" name="project-leader" id="inputProjectLeader" class="form-control" value="${pDto.projectLeader}">
+                                <input type="text" name="project-leader" id="inputProjectLeader" class="form-control" value="${pDto.projectLeader}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputFile">Project Image</label>
+                                <div class = "input-group">
+                                    <div class="custom-file">
+                                        <input type="file" name="project-image" class="custom-file-input" id="exampleInputFile">
+                                        <label class="custom-file-label" for="exampleInputFile">${pDto.projectImage}</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -138,79 +147,79 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
-                    <div class="card card-info">
-                        <div class="card-header">
-                            <h3 class="card-title">Files</h3>
+<%--                    <!-- /.card -->--%>
+<%--                    <div class="card card-info">--%>
+<%--                        <div class="card-header">--%>
+<%--                            <h3 class="card-title">Files</h3>--%>
 
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>File Name</th>
-                                    <th>File Size</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
+<%--                            <div class="card-tools">--%>
+<%--                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">--%>
+<%--                                    <i class="fas fa-minus"></i>--%>
+<%--                                </button>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                        <div class="card-body p-0">--%>
+<%--                            <table class="table">--%>
+<%--                                <thead>--%>
+<%--                                <tr>--%>
+<%--                                    <th>File Name</th>--%>
+<%--                                    <th>File Size</th>--%>
+<%--                                    <th></th>--%>
+<%--                                </tr>--%>
+<%--                                </thead>--%>
+<%--                                <tbody>--%>
 
-                                <tr>
-                                    <td>Functional-requirements.docx</td>
-                                    <td>49.8005 kb</td>
-                                    <td class="text-right py-0 align-middle">
-                                        <div class="btn-group btn-group-sm">
-                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                <tr>
-                                    <td>UAT.pdf</td>
-                                    <td>28.4883 kb</td>
-                                    <td class="text-right py-0 align-middle">
-                                        <div class="btn-group btn-group-sm">
-                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                <tr>
-                                    <td>Email-from-flatbal.mln</td>
-                                    <td>57.9003 kb</td>
-                                    <td class="text-right py-0 align-middle">
-                                        <div class="btn-group btn-group-sm">
-                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                <tr>
-                                    <td>Logo.png</td>
-                                    <td>50.5190 kb</td>
-                                    <td class="text-right py-0 align-middle">
-                                        <div class="btn-group btn-group-sm">
-                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                <tr>
-                                    <td>Contract-10_12_2014.docx</td>
-                                    <td>44.9715 kb</td>
-                                    <td class="text-right py-0 align-middle">
-                                        <div class="btn-group btn-group-sm">
-                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                        </div>
-                                    </td>
+<%--                                <tr>--%>
+<%--                                    <td>Functional-requirements.docx</td>--%>
+<%--                                    <td>49.8005 kb</td>--%>
+<%--                                    <td class="text-right py-0 align-middle">--%>
+<%--                                        <div class="btn-group btn-group-sm">--%>
+<%--                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>--%>
+<%--                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>--%>
+<%--                                        </div>--%>
+<%--                                    </td>--%>
+<%--                                <tr>--%>
+<%--                                    <td>UAT.pdf</td>--%>
+<%--                                    <td>28.4883 kb</td>--%>
+<%--                                    <td class="text-right py-0 align-middle">--%>
+<%--                                        <div class="btn-group btn-group-sm">--%>
+<%--                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>--%>
+<%--                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>--%>
+<%--                                        </div>--%>
+<%--                                    </td>--%>
+<%--                                <tr>--%>
+<%--                                    <td>Email-from-flatbal.mln</td>--%>
+<%--                                    <td>57.9003 kb</td>--%>
+<%--                                    <td class="text-right py-0 align-middle">--%>
+<%--                                        <div class="btn-group btn-group-sm">--%>
+<%--                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>--%>
+<%--                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>--%>
+<%--                                        </div>--%>
+<%--                                    </td>--%>
+<%--                                <tr>--%>
+<%--                                    <td>Logo.png</td>--%>
+<%--                                    <td>50.5190 kb</td>--%>
+<%--                                    <td class="text-right py-0 align-middle">--%>
+<%--                                        <div class="btn-group btn-group-sm">--%>
+<%--                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>--%>
+<%--                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>--%>
+<%--                                        </div>--%>
+<%--                                    </td>--%>
+<%--                                <tr>--%>
+<%--                                    <td>Contract-10_12_2014.docx</td>--%>
+<%--                                    <td>44.9715 kb</td>--%>
+<%--                                    <td class="text-right py-0 align-middle">--%>
+<%--                                        <div class="btn-group btn-group-sm">--%>
+<%--                                            <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>--%>
+<%--                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>--%>
+<%--                                        </div>--%>
+<%--                                    </td>--%>
 
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
+<%--                                </tbody>--%>
+<%--                            </table>--%>
+<%--                        </div>--%>
+<%--                        <!-- /.card-body -->--%>
+<%--                    </div>--%>
                     <!-- /.card -->
                 </div>
             </div>
@@ -249,5 +258,11 @@
 <script src="../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<script src="../plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
+<script>
+    $(function () {
+        bsCustomFileInput.init();
+    });
+</script>
 </body>
 </html>

@@ -90,6 +90,7 @@
                 </div>
               </div>
               <div class="row">
+                <img src="../files/${pDto.projectImage}" style="width: 200px"/>
                 <div class="col-12">
                   <h4>Recent Activity</h4>
                     <div class="post">

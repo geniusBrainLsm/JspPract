@@ -43,7 +43,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <form action="../project/add" method="post">
+      <form action="../project/add" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-md-6">
           <div class="card card-primary">
@@ -80,7 +80,16 @@
               </div>
               <div class="form-group">
                 <label for="inputProjectLeader">Project Leader</label>
-                <input type="text" name="project-leader" id="inputProjectLeader" class="form-control">
+                <input type="text" name="project-leader" id="inputProjectLeader" class="form-control" value = "${dto.fullName}" readonly>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputFile">Project Image</label>
+                <div class = "input-group">
+                  <div class="custom-file">
+                    <input type="file" name="project-image" class="custom-file-input" id="exampleInputFile">
+                    <label class="custom-file-label" for="exampleInputFile">${pDto.projectImage}</label>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- /.card-body -->
@@ -152,5 +161,13 @@
 <script src="../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<%--왜안돼??????????????--%>
+
+<script src="../plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
+<script>
+  $(function () {
+    bsCustomFileInput.init();
+  });
+</script>
 </body>
 </html>
