@@ -1,6 +1,6 @@
 package idusw.javaweb.openapia.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ProjectDTO {
     private Long pid;
@@ -12,23 +12,23 @@ public class ProjectDTO {
     private Long estimatedBudget;
     private Long totalAmountSpent;
     private Long estimatedProjectDuration;
-    private Date regTimestamp;
-    private Date revTimestamp;
+    private Timestamp regTimestamp;
+    private Timestamp revTimestamp;
     private String projectImage;
 
-    public Date getRegTimestamp() {
+    public Timestamp getRegTimestamp() {
         return regTimestamp;
     }
 
-    public void setRegTimestamp(Date regTimestamp) {
+    public void setRegTimestamp(Timestamp regTimestamp) {
         this.regTimestamp = regTimestamp;
     }
 
-    public Date getRevTimestamp() {
+    public Timestamp getRevTimestamp() {
         return revTimestamp;
     }
 
-    public void setRevTimestamp(Date revTimestamp) {
+    public void setRevTimestamp(Timestamp revTimestamp) {
         this.revTimestamp = revTimestamp;
     }
 
