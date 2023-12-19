@@ -241,10 +241,10 @@ public class ProjectController extends HttpServlet {
         projectDTO.setStatus(rs.getString("status"));
         projectDTO.setProjectLeader(rs.getString("project_leader"));
 
-        java.sql.Date regTimestamp = rs.getDate("reg_timestamp");
+        Timestamp regTimestamp = rs.getDate("reg_timestamp");
         projectDTO.setRegTimestamp(regTimestamp);
 
-        java.sql.Date revTimestamp = rs.getDate("rev_timestamp");
+        Timestamp revTimestamp = rs.getDate("rev_timestamp");
         projectDTO.setRevTimestamp(revTimestamp);
 
         projectDTO.setProjectImage(rs.getString("project_image"));
